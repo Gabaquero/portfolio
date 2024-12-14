@@ -1,12 +1,6 @@
 ---
 const { title, description, page, slug, frontmatter } = Astro.props;
-const image =
-  page === "travel"
-    ? `${Astro.url.origin}/globe_preview.webp"`
-    : `${Astro.url.origin}/og-image.png`;
 
-const schema =
-  page !== "blog"
 ---
 
 <!doctype html>
@@ -28,21 +22,8 @@ const schema =
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <meta property="og:url" content={Astro.url.origin} />
-    <meta
-      property="og:image"
-      content={image || "https://gbaquero.xyz/og-image.png"}
-    />
-    <!-- Basic Twitter Card tags -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={title} />
-    <meta name="twitter:description" content={description} />
-    <meta
-      name="twitter:image"
-      content={image || "https://gbaquero.xyz/og-image.png"}
-    />
 
     <link rel="preconnect" href="https://cdn.fontshare.com" />
-    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
   </head>
   <body
     class="bg-darkslate-700 md:h-screen flex flex-col justify-center items-center"
