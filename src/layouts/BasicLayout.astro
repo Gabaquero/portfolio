@@ -1,6 +1,5 @@
 ---
-const { title, description, page, slug, frontmatter } = Astro.props;
-
+const { title, description } = Astro.props;
 ---
 
 <!doctype html>
@@ -14,22 +13,24 @@ const { title, description, page, slug, frontmatter } = Astro.props;
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <meta name="generator" content={Astro.generator} />
-    <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="robots" content="/favicon/sitemap-index.xml" />
-    <!-- Basic OG tags for sharing your website's content on platforms like Facebook and LinkedIn -->
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <meta property="og:url" content={Astro.url.origin} />
-
     <link rel="preconnect" href="https://cdn.fontshare.com" />
+    <title>{title}</title>
   </head>
-  <body
-    class="bg-darkslate-700 md:h-screen flex flex-col justify-center items-center"
-  >
+  <body class="bg-darkslate-700 md:h-screen flex flex-col justify-center items-center">
     <slot name="loader" />
+      <!-- Overlay with 2 layers -->
+      <div class="open">
+        <div class="layer"></div>
+        <div class="layer"></div>
+      </div>
     <slot />
+    <script src="/expand-cards.js" defer></script>
   </body>
 </html>
 
@@ -37,18 +38,16 @@ const { title, description, page, slug, frontmatter } = Astro.props;
   @font-face {
     font-family: "CabinetGrotesk";
     src: url("/fonts/CabinetGrotesk-Variable.ttf") format("truetype-variations");
-    font-weight: normal;
+    font-weight: 100 1000;
     font-style: normal;
     font-display: swap;
-    font-weight: 100 1000;
   }
   @font-face {
     font-family: "Satoshi";
     src: url("/fonts/Satoshi-Variable.ttf") format("truetype-variations");
-    font-weight: normal;
+    font-weight: 100 1000;
     font-style: normal;
     font-display: swap;
-    font-weight: 100 1000;
   }
 
   body {
@@ -56,20 +55,197 @@ const { title, description, page, slug, frontmatter } = Astro.props;
     font-family: "Satoshi", sans-serif;
     -webkit-font-smoothing: antialiased;
   }
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    font-family: "Cabinet Grotesk", sans-serif;
+  h1, h2, h3, h4, h5, h6 {
+    font-family: "CabinetGrotesk", sans-serif;
   }
   p {
-    font-family: "Satoshi";
+    font-family: "Satoshi", sans-serif;
   }
 
-  b {
-    font-weight: 700 !important;
+  .cards-container {
+    position: relative;
+    width: 100%;
+    height: 800px;
+    max-width: 1152px;
+    margin: 0 auto;
+  }
+
+  .card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .card.expandable:hover {
+    transform: translateY(-4px) scale(1.02);
+    border-color: #df3b12;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+  }
+  .card .hidden-when-collapsed {
+    display: none;
+    opacity: 0;
+    transform: scale(0.95);
+    transition: all 0.3s ease;
+  }
+  .card.expandable {
+    cursor: pointer;
+  }
+  @keyframes cardOpen {
+    0% {
+      transform: scale(0.9);
+      opacity: 0;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
+  @keyframes cardExpand {
+    0% {
+      transform: translateY(40%) scale(0.95);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0%) scale(1);
+      opacity: 1;
+    }
+  }
+  .card.expanded {
+    position: absolute;
+    z-index: 9999;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    animation: cardExpand 0.4s ease forwards;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(16px);
+  }
+  .card.expanded .hidden-when-collapsed {
+    display: block;
+    opacity: 1;
+    transform: scale(1);
+  }
+  .open {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    pointer-events: none;
+    z-index: 10000;
+  }
+  .open .layer {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    transform-origin: top;
+    animation: open 1s ease-in-out forwards;
+  }
+  .open .layer:nth-child(1) {
+    background: #000000;
+    z-index: 2;
+  }
+  .open .layer:nth-child(2) {
+    background: #797979;
+    z-index: 1;
+    animation-delay: 1s;
+  }
+
+  .banner-section {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .banner-text {
+    position: absolute;
+    top: 50%;
+    left: 10%;
+    transform: translateY(-50%);
+    max-width: 700px;
+  }
+  .banner-text h2,
+  .banner-text h3 {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+    transform-origin: left;
+    text-transform: uppercase;
+    transform: scaleX(0);
+    animation: revealTextReverse 1s ease-in-out forwards;
+  }
+  .banner-text h2 {
+    font-size: 6em;
+    animation-delay: 2s;
+  }
+  .banner-text h3 {
+    font-size: 3em;
+    animation-delay: 3s;
+  }
+  .banner-text h2:before,
+  .banner-text h3:before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    background: #000;
+    width: 100%;
+    height: 100%;
+    transform-origin: right;
+    animation: revealText 1s ease-in-out forwards;
+    animation-delay: 3s;
+  }
+  .banner-text h3:before {
+    animation-delay: 4s;
+  }
+  .banner-text p {
+    opacity: 0;
+    font-size: 1.2em;
+    animation: fadeIn 1s linear forwards;
+    animation-delay: 5s;
+  }
+  .banner-text a {
+    opacity: 0;
+    display: inline-block;
+    margin: 20px 0 0;
+    padding: 10px 20px;
+    border-radius: 10px;
+    background: #000;
+    color: #fff;
+    font-weight: 700;
+    text-decoration: none;
+    font-size: 1.2em;
+    letter-spacing: 1px;
+    animation: fadeInBottom .5s linear forwards;
+    animation-delay: 5.5s;
+  }
+
+  @keyframes open {
+    0% { transform: scaleY(1); }
+    100% { transform: scaleY(0); }
+  }
+  @keyframes revealText {
+    0% { transform: scaleX(1); }
+    100% { transform: scaleX(0); }
+  }
+  @keyframes revealTextReverse {
+    0% { transform: scaleX(0); }
+    100% { transform: scaleX(1); }
+  }
+  @keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+  @keyframes fadeInBottom {
+    0% {
+      transform: translateY(50px);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
   }
 </style>

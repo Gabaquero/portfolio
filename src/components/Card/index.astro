@@ -1,43 +1,56 @@
 ---
-import { Icon } from "astro-icon/components";
 import Content from "./Content.astro";
 
 interface Props {
   title?: string;
   body?: string;
+  expandedBody?: string;
   colSpan?: string;
   rowSpan?: string;
   href?: string;
   colorText?: string;
   height?: string;
   width?: string;
+  expandable?: boolean;
+
+  /* ADD THIS to allow inline styles */
+  style?: string;
 }
 
-const { title, body, colSpan, rowSpan, href, colorText, height } = Astro.props;
+const {
+  title,
+  body,
+  expandedBody,
+  colSpan,
+  rowSpan,
+  href,
+  colorText,
+  height,
+  expandable = false,
+  style, /* retrieve style prop */
+} = Astro.props;
 ---
 
 <div
-  class={`card h-max sm:h-auto group overflow-hidden transform-y-[-40%] bg-darkslate-500 shadow-lg rounded-lg p-6 border border-darkslate-100 hover:border-primary-500 align-start flex-none ${
-    height || "h-full"
-  } justify-start relative transform perspective-1200 w-full transition duration-75 ease-in-out col-span-1 ${
-    colSpan || "md:col-span-2"
-  } ${rowSpan || ""}`}
+  style={style}
+  class={`card relative transition-all duration-300
+          bg-darkslate-500 shadow-lg rounded-lg p-6 border border-darkslate-100
+          flex-none ${height || "h-full"}
+          w-full col-span-1 ${colSpan || "md:col-span-2"}
+          ${rowSpan || ""}
+          ${expandable ? "expandable hover:border-primary-500 cursor-pointer" : ""}
+        `}
 >
-  {
-    href ? (
-      <a href={href} class={`h-full w-full ${colorText || " "}`}>
-        <Icon
-          name="ri:arrow-right-up-line"
-          class="h-6 float-right group-hover:text-primary-500 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform ease-in-out duration-100 z-20"
-        />
-        <Content title={title} body={body}>
-          <slot />
-        </Content>
+  {href && (
+    <p class="mb-2 text-sm">
+      <a href={href} class="underline text-primary-400">
+        Visit Link
       </a>
-    ) : (
-      <Content title={title} body={body}>
-        <slot />
-      </Content>
-    )
-  }
+    </p>
+  )}
+
+  <Content title={title} body={body} expandedBody={expandedBody}>
+    <slot />
+    <slot name="expanded" slot="expanded" />
+  </Content>
 </div>

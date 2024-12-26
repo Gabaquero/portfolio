@@ -2,13 +2,35 @@
 interface Props {
   title?: string;
   body?: string;
+  expandedBody?: string;
 }
 
-const { title, body } = Astro.props;
+const { title, body, expandedBody } = Astro.props;
 ---
 
 <>
-  {title && <h2 class="text-xl font-bold m-0 z-20">{title}</h2>}
+  {title && <h2 class="text-xl font-bold m-0">{title}</h2>}
   {body && <p class="m-0 font-light text-base">{body}</p>}
+
+  <!-- Collapsed (default) slot: short summary or partial info -->
   <slot />
+
+  <!-- Expanded area: hidden unless .card.expanded is active -->
+  <div class="hidden-when-collapsed mt-4 p-2 border-t border-gray-500 relative">
+    <!-- The "close" button in top-right corner -->
+    <button
+      class="close-btn absolute top-2 right-2 text-white bg-none text-xl p-1"
+      style="background: none; border: none; cursor: pointer;"
+    >
+      &lt;
+    </button>
+
+    {expandedBody && (
+      <p class="mb-2">
+        {expandedBody}
+      </p>
+    )}
+    <!-- Named slot for more nested details -->
+    <slot name="expanded" />
+  </div>
 </>

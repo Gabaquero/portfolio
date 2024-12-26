@@ -1,0 +1,50 @@
+
+
+/* .hidden-when-collapsed is hidden unless .card.expanded */
+.card .hidden-when-collapsed {
+  display: none;
+  opacity: 0;
+  transform: scale(0.95);
+  transition: all 0.3s ease;
+}
+.card.expanded .hidden-when-collapsed {
+  display: block;
+  opacity: 1;
+  transform: scale(1);
+}
+/* Optionally animate the card itself */
+.card.expanded {
+  /* example scale or fade */
+  position: absolute; 
+  top: 0; 
+  left: 0; 
+  width: 100%;
+  height: 100%;
+  animation: cardOpen 0.4s ease forwards;
+}
+
+.close-btn {
+  /* example if you’re not using Tailwind: */
+  background-color: #555;
+  color: #797979;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+}
+.close-btn:hover {
+  background-color: #333;
+}
+
+
+@keyframes cardOpen {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
