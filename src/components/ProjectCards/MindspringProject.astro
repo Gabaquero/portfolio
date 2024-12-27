@@ -1,0 +1,21 @@
+---
+import Card from "../Card/index.astro";
+---
+
+<Card
+  expandable={true}
+  title="The Tyr Project"
+>
+  <!-- Collapsed view -->
+  <p class="text-sm font-light">
+    3D printed humanoid robot plus Tyr Chatbot webapp integration.
+  </p>
+
+  <!-- Expanded view -->
+  <div slot="expanded" class="space-y-4">
+    <p class="text-base">
+      A humanoid platform with advanced servo control and a companion chatbot for remote interactions.
+    </p>
+    <!-- Add more details, images, links etc. -->
+  </div>
+</Card>

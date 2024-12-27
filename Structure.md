@@ -42,20 +42,62 @@
         └── 📁objects
             └── 📁00
                 └── 6b28e2107379bd01ee322d55122504a23360ef
+            └── 📁0b
+                └── 50734c8d66c81614b94cdc04284de54970c1a6
+            └── 📁1c
+                └── 78d0b63de2c899bde334047a1a59f38996270e
+            └── 📁35
+                └── b9350141b5257d5e34a0cc741716149b490a2a
+            └── 📁3a
+                └── 51f12e5fa867350dc49eaf469f822571d35175
+            └── 📁3f
+                └── ca6abcb41a1bba564940ad9dd8b53db60445c4
             └── 📁45
                 └── 6101e50e254880ae428e0fd6662910d655a79c
+            └── 📁5d
+                └── 83cb38d69057efe1185ce1e0f1f3414ff00692
             └── 📁5f
                 └── 60a599b1d11dd58d79b40c96112f871a17a685
+            └── 📁6d
+                └── aad1584236f1c1d8c65f28089a1bda99e7f6f3
+            └── 📁6f
+                └── 37be602cc8cb8ee38aa0ed7eff5f5cd183c3a9
             └── 📁75
                 └── 20bfdeeccbba44084908945c9cc5619a3dc88c
+            └── 📁77
+                └── befdb44726dfaf6f6bfb45fa7960061d9ad842
             └── 📁93
                 └── a5edd6eb851b13b276b1da87278d1d3db649c5
+            └── 📁95
+                └── 984a8430bbc398486762fa91a6793c2151d53a
+            └── 📁9e
+                └── 90b59011d07211d3b691990ef4024f92237bd7
+            └── 📁a2
+                └── 2ef9e30c2397044bd40203a39c306a116f3cb7
+            └── 📁b0
+                └── a8350c0461a8867caa47cf272b56046830334d
+            └── 📁b8
+                └── 44dfeaa699c60f9a2abfbc19643248316989fd
             └── 📁ba
                 └── 1194306135ffc4765dc6f8f61071de6ff63e6c
             └── 📁c1
                 └── 18b9b2662fb3aa0e26e7914693a1eb6f6f3cf1
+            └── 📁c4
+                └── 218d014c10e736ebcbb81e470fe6b3f3bfcd60
+            └── 📁ce
+                └── 0ab2138b9ca952b21afb9fecded97868c90f85
+            └── 📁d0
+                └── 3b302a982340ac6f77f9a9fa25f332b9d15da7
+            └── 📁d5
+                └── e067f545d3bce86d6278ea2dc90cdced988025
             └── 📁e0
                 └── f1b7f5a4a7008ab8abac95d3cf05f40fb61e98
+            └── 📁ea
+                └── 1b3ec0f598f2ec6305b9b55a8e17c60a5a05f2
+            └── 📁ec
+                └── 6749dc99882ca0328690327594ee93fa816a80
+            └── 📁fd
+                └── 6d47ddebd3d99279d95b0125c67bca290638bf
             └── 📁info
             └── 📁pack
                 └── pack-05ed1c33f40256a0ea289baa9c51011e1848e7ab.idx
@@ -85,6 +127,7 @@
         └── extensions.json
         └── launch.json
     └── 📁public
+        └── expand-cards.js
         └── favicon.ico
         └── favicon.svg
         └── 📁fonts
@@ -101,7 +144,22 @@
                 └── Content.astro
                 └── index.astro
             └── ContactsCard.astro
+            └── ErrorBoundary.astro
             └── IntroCard.astro
+            └── 📁ProjectCards
+                └── AnalogSynth.astro
+                └── AutonomousRCCar.astro
+                └── GuitarPedal.astro
+                └── MindspringProject.astro
+                └── NeuroExoProject.astro
+                └── PLEGSProject.astro
+                └── PurdueREU.astro
+                └── RiceREU.astro
+                └── SofExoProject.astro
+                └── SolioMatlabApp.astro
+                └── TextGame.astro
+                └── TyrProject.astro
+                └── VoyagerDecode.astro
             └── Projects.astro
             └── TimeZoneCard.astro
         └── env.d.ts
@@ -113,6 +171,8 @@
             └── helpers.ts
         └── 📁pages
             └── index.astro
+        └── 📁styles
+            └── global.css
     └── .gitattributes
     └── .gitignore
     └── astro.config.mjs
@@ -122,6 +182,7 @@
     └── pnpm-lock.yaml
     └── postcss.config.cjs
     └── README.md
+    └── Structure.md
     └── svelte.config.js
     └── tsconfig.json
     └── uno.config.ts
