@@ -24,7 +24,7 @@ import Card from "./Card/index.astro";
   });
 
   onCleanup(() => {
-    clearInterval(interval);
+    clearInterval(interval as unknown as number);
   });
 </script>
 

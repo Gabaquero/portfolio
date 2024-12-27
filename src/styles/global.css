@@ -1,4 +1,20 @@
+/* Optionally animate the card itself */
+.card.expanded {
+  animation: none !important; /* Disable animation */
+  position: absolute;
+  z-index: 9999;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  animation: none; /* Disable animation */
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+  background-color: #141414; /* Use consistent background color */
+}
 
+.open .layer {
+  animation: none;
+}
 
 /* .hidden-when-collapsed is hidden unless .card.expanded */
 .card .hidden-when-collapsed {
@@ -7,36 +23,52 @@
   transform: scale(0.95);
   transition: all 0.3s ease;
 }
+
 .card.expanded .hidden-when-collapsed {
   display: block;
   opacity: 1;
-  transform: scale(1);
+  transform: none;
 }
-/* Optionally animate the card itself */
-.card.expanded {
-  /* example scale or fade */
-  position: absolute; 
-  top: 0; 
-  left: 0; 
-  width: 100%;
-  height: 100%;
-  animation: cardOpen 0.4s ease forwards;
+
+:root {
+  --card-bg: #555; /* Use your card background color here */
+}
+
+/* Position header elements */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+
+.hidden-when-collapsed {
+  display: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.card.expanded .hidden-when-collapsed {
+  display: block;
+  opacity: 1;
 }
 
 .close-btn {
-  /* example if you’re not using Tailwind: */
-  background-color: #555;
-  color: #797979;
-  border: none;
+  position: absolute;
+  top: -0.5rem; /* Raise the button higher */
+  right: 0.5rem;
+  background-color: var(--card-bg);
+  color: #fff;
   border-radius: 4px;
-  font-size: 1rem;
   cursor: pointer;
+  font-size: 1.25rem;
   padding: 0.25rem 0.5rem;
-}
-.close-btn:hover {
-  background-color: #333;
+  transition: opacity 0.3s ease;
 }
 
+.close-btn:hover {
+  opacity: 0.8;
+}
 
 @keyframes cardOpen {
   from {

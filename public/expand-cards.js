@@ -34,4 +34,20 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   });
+
+  document.addEventListener("click", (e) => {
+    if (e.target.closest(".close-btn")) {
+      const card = e.target.closest(".card");
+      if (card) {
+        card.classList.remove("expanded");
+      }
+    }
+  
+    if (e.target.closest(".card.expandable") && !e.target.closest(".close-btn")) {
+      const card = e.target.closest(".card");
+      if (card) {
+        card.classList.toggle("expanded");
+      }
+    }
+  });
 });

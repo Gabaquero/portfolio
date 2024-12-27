@@ -1,7 +1,7 @@
 ---
 import Card from "../components/Card/index.astro";
 import AnalogSynth from "./ProjectCards/AnalogSynth.astro";
-import Layout from "../layouts/Layout.astro";
+import ProyectLayout from "../layouts/ProyectLayout.astro";
 
 // The same array of projects as before
 const projects = [
@@ -98,33 +98,25 @@ const projects = [
   <astro:slot slot="expanded">
     <!-- Filter bar -->
     <div class="skills-filter mb-4 space-x-2">
-      <button class="filter-btn active" data-skill="all">All</button>
-      <button class="filter-btn" data-skill="robotics">Robotics</button>
-      <button class="filter-btn" data-skill="embedded">Embedded</button>
-      <button class="filter-btn" data-skill="exoskeleton">Exoskeleton</button>
-      <button class="filter-btn" data-skill="c++">C++</button>
-      <button class="filter-btn" data-skill="c">C</button>
-      <button class="filter-btn" data-skill="3dprinting">3DPrinting</button>
-      <button class="filter-btn" data-skill="webdev">WebDev</button>
-      <button class="filter-btn" data-skill="matlab">Matlab</button>
-      <button class="filter-btn" data-skill="research">Research</button>
-      <button class="filter-btn" data-skill="electronics">Electronics</button>
+      <button class="filter-btn active" data-skill="All">All</button>
+      <button class="filter-btn" data-skill="Robotics">Robotics</button>
+      <button class="filter-btn" data-skill="Embedded">Embedded</button>
+      <button class="filter-btn" data-skill="Exoskeleton">Exoskeleton</button>
+      <button class="filter-btn" data-skill="C++">C++</button>
+      <button class="filter-btn" data-skill="C">C</button>
+      <button class="filter-btn" data-skill="3D Printing">3DPrinting</button>
+      <button class="filter-btn" data-skill="WebDev">WebDev</button>
+      <button class="filter-btn" data-skill="MATLAB">Matlab</button>
+      <button class="filter-btn" data-skill="Research">Research</button>
+      <button class="filter-btn" data-skill="Electronics">Electronics</button>
     </div>
-    <Layout
-      title="Gabriel Baquero - Electrical Engineer"
-      description="I am an Electrical Engineering student with a passion for embedded systems and hardware design."
-    >
-      <main
-        class="text-white m-auto p-2 grid gap-2 max-w-6xl overflow-hidden relative w-full sm:p-4 sm:gap-2 md:grid-cols-2 md:gap-3 md:p-6 lg:h-screen lg:grid-rows-8 lg:grid-cols-4 lg:gap-4 lg:max-h-[800px]"
-      >
-        <AnalogSynth />
-        <AnalogSynth />
-        <AnalogSynth />
+    <ProyectLayout title="Projects" description="A collection of my recent projects.">
+      <main class="relative text-white m-auto p-4 grid gap-4 max-w-6xl sm:grid-cols-2 lg:grid-cols-4">
         <AnalogSynth />
         <AnalogSynth />
         <AnalogSynth />
       </main>
-    </Layout>
+    </ProyectLayout>
   </astro:slot>
 </Card>
 
