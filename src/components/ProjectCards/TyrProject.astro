@@ -3,19 +3,15 @@ import Card from "../Card/index.astro";
 ---
 
 <Card
+  title="AnalogSynth"
+  colSpan="md:col-span-1"
+  rowSpan="md:row-span-2"
   expandable={true}
-  title="The Tyr Project"
 >
   <!-- Collapsed view -->
-  <p class="text-sm font-light">
-    3D printed humanoid robot plus Tyr Chatbot webapp integration.
-  </p>
+  <!-- No default-slot content, so no text when collapsed -->
 
-  <!-- Expanded view -->
-  <div slot="expanded" class="space-y-4">
-    <p class="text-base">
-      A humanoid platform with advanced servo control and a companion chatbot for remote interactions.
-    </p>
-    <!-- Add more details, images, links etc. -->
-  </div>
+  <astro:slot slot="expanded">
+
+  </astro:slot>
 </Card>

@@ -1,5 +1,7 @@
 ---
 import Card from "../components/Card/index.astro";
+import AnalogSynth from "./ProjectCards/AnalogSynth.astro";
+import Layout from "../layouts/Layout.astro";
 
 // The same array of projects as before
 const projects = [
@@ -108,26 +110,21 @@ const projects = [
       <button class="filter-btn" data-skill="research">Research</button>
       <button class="filter-btn" data-skill="electronics">Electronics</button>
     </div>
-
-    <!-- Sub-cards for each project -->
-    <div class="projects-grid grid grid-cols-1 sm:grid-cols-2 gap-4">
-      {projects.map((proj) => (
-        <Card
-          expandable={true}
-          --inline-data-skills={proj.skills.join(" ")}
-          style="background-color: rgba(0,0,0,0.3);"
-          title={proj.title}
-        >
-          <!-- Collapsed summary slot -->
-          <p class="text-sm mb-2">{proj.summary}</p>
-
-          <!-- Expanded details slot -->
-          <astro:slot slot="expanded">
-            <p class="text-sm mt-2">{proj.details || "More details soon..."}</p>
-          </astro:slot>
-        </Card>
-      ))}
-    </div>
+    <Layout
+      title="Gabriel Baquero - Electrical Engineer"
+      description="I am an Electrical Engineering student with a passion for embedded systems and hardware design."
+    >
+      <main
+        class="text-white m-auto p-2 grid gap-2 max-w-6xl overflow-hidden relative w-full sm:p-4 sm:gap-2 md:grid-cols-2 md:gap-3 md:p-6 lg:h-screen lg:grid-rows-8 lg:grid-cols-4 lg:gap-4 lg:max-h-[800px]"
+      >
+        <AnalogSynth />
+        <AnalogSynth />
+        <AnalogSynth />
+        <AnalogSynth />
+        <AnalogSynth />
+        <AnalogSynth />
+      </main>
+    </Layout>
   </astro:slot>
 </Card>
 
