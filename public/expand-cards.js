@@ -4,50 +4,38 @@ document.addEventListener("DOMContentLoaded", () => {
   const expandableCards = document.querySelectorAll(".card.expandable");
 
   expandableCards.forEach((card) => {
-    // Toggle on card click
+    // Expand the card on click
     card.addEventListener("click", (e) => {
-      e.stopPropagation();
-      if (card.classList.contains("expanded")) {
-        // If you want a second click to close, do:
-        // card.classList.remove("expanded");
-      } else {
+      if (!card.classList.contains("expanded")) {
+        e.stopPropagation();
         card.classList.add("expanded");
+        document.body.classList.add("overlay-active");
       }
     });
 
-    // 1) Find the close button, if any
-    const closeBtn = card.querySelector(".close-btn");
-    if (closeBtn) {
-      closeBtn.addEventListener("click", (e) => {
-        e.stopPropagation(); // don’t bubble up
+    // Handle the close button
+    const closeButton = card.querySelector(".close-btn");
+    if (closeButton) {
+      closeButton.addEventListener("click", (e) => {
+        e.stopPropagation();
         card.classList.remove("expanded");
+        if (!document.querySelector(".card.expanded")) {
+          document.body.classList.remove("overlay-active");
+        }
       });
     }
   });
 
-  // 2) Outside click closes any expanded card
+  // Close only the current card when clicking outside
   document.addEventListener("click", (e) => {
-    const allExpanded = document.querySelectorAll(".card.expanded");
-    allExpanded.forEach((expandedCard) => {
-      if (!expandedCard.contains(e.target)) {
-        expandedCard.classList.remove("expanded");
+    const expandedCards = document.querySelectorAll(".card.expanded");
+    expandedCards.forEach((card) => {
+      if (!card.contains(e.target)) {
+        card.classList.remove("expanded");
+        if (!document.querySelector(".card.expanded")) {
+          document.body.classList.remove("overlay-active");
+        }
       }
     });
-  });
-
-  document.addEventListener("click", (e) => {
-    if (e.target.closest(".close-btn")) {
-      const card = e.target.closest(".card");
-      if (card) {
-        card.classList.remove("expanded");
-      }
-    }
-  
-    if (e.target.closest(".card.expandable") && !e.target.closest(".close-btn")) {
-      const card = e.target.closest(".card");
-      if (card) {
-        card.classList.toggle("expanded");
-      }
-    }
   });
 });

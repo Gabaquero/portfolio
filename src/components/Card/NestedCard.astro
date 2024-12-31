@@ -1,0 +1,124 @@
+---
+interface Props {
+  title: string;
+  expandable?: boolean;
+}
+
+const { title, expandable = true } = Astro.props;
+---
+
+<div class="nested-card bg-darkslate-500 shadow-lg rounded-lg p-6 border border-darkslate-100">
+  <div class="header flex justify-between items-center relative">
+    <h2 class="text-xl font-bold m-0">{title}</h2>
+  </div>
+
+  <!-- Close button moved outside header and styled to match main card -->
+  {expandable && (
+    <div class="close-button-wrapper opacity-0 pointer-events-none absolute top-2 right-2 z-50">
+      <button
+        class="close-btn"
+        style="background: none; border: none; font-size: 1.5rem; padding: 0.25rem; color: currentColor;"
+      >
+        &times;
+      </button>
+    </div>
+  )}
+
+  <div class="expanded-content">
+    <slot name="expanded" />
+  </div>
+</div>
+
+<style>
+  .nested-card {
+    position: relative;
+    transition: all 0.3s ease;
+  }
+
+  .nested-card .expanded-content {
+    display: none;
+  }
+
+  .nested-card.expanded {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    height: 90%;
+    z-index: 100;
+    overflow-y: auto;
+  }
+
+  .nested-card.expanded::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.75);
+    z-index: -1;
+  }
+
+  .nested-card.expanded .expanded-content {
+    display: block;
+    margin-top: 1rem;
+  }
+
+  /* Close button visibility */
+  .nested-card.expanded .close-button-wrapper {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* Style close button to match main card */
+  .close-btn {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease, opacity 0.3s ease;
+  }
+
+  .close-btn:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+</style>
+
+<script>
+  function setupNestedCards() {
+    const cards = document.querySelectorAll('.nested-card');
+    
+    cards.forEach(card => {
+      card.addEventListener('click', (event) => {
+        const target = event.target as HTMLElement;
+        if (!target) return;
+        
+        if (target.closest('.close-btn')) {
+          event.stopPropagation();
+          card.classList.remove('expanded');
+          return;
+        }
+        
+        // Don't propagate click to parent card
+        event.stopPropagation();
+        
+        const isExpanded = card.classList.contains('expanded');
+        
+        // Close all other expanded cards
+        document.querySelectorAll('.nested-card.expanded').forEach(expandedCard => {
+          if (expandedCard !== card) {
+            expandedCard.classList.remove('expanded');
+          }
+        });
+        
+        card.classList.toggle('expanded');
+      });
+    });
+  }
+
+  // Setup on initial load and navigation
+  setupNestedCards();
+  document.addEventListener('astro:page-load', setupNestedCards);
+</script>

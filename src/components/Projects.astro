@@ -1,89 +1,19 @@
 ---
 import Card from "../components/Card/index.astro";
-import AnalogSynth from "./ProjectCards/AnalogSynth.astro";
+import NestedCard from "../components/Card/NestedCard.astro";
 import ProyectLayout from "../layouts/ProyectLayout.astro";
-
-// The same array of projects as before
-const projects = [
-  {
-    title: "The Tyr Project",
-    skills: ["robotics", "3dprinting", "chatbot", "webdev"],
-    summary: "3D printed humanoid robot plus Tyr Chatbot webapp integration.",
-    details: "A humanoid platform with advanced servo control, and a companion chatbot for remote interactions.",
-  },
-  {
-    title: "Autonomous RC Car",
-    skills: ["embedded", "electronics", "sensors", "python"],
-    summary: "Self-driving RC car controlled by microcontroller & sensor array.",
-    details: "Uses ultrasonic sensors and an onboard microcontroller to navigate obstacles autonomously.",
-  },
-  {
-    title: "Solio: Matlab App",
-    skills: ["matlab", "ui", "dataanalysis"],
-    summary: "MATLAB-based GUI app for signal processing tasks.",
-    details: "A user-friendly interface for data import, real-time plotting, and custom algorithms in MATLAB.",
-  },
-  {
-    title: "Rice REU",
-    skills: ["research", "python", "hardware"],
-    summary: "Summer research program at Rice University.",
-    details: "Focused on hardware design and data analysis in collaboration with faculty mentors.",
-  },
-  {
-    title: "Purdue REU",
-    skills: ["research", "vlsi", "cad"],
-    summary: "Undergraduate research at Purdue University on VLSI design.",
-    details: "Investigated transistor-level design flows and CAD tools for advanced chip prototypes.",
-  },
-  {
-    title: "The PLEGS project",
-    skills: ["exoskeleton", "biomechanics", "embedded"],
-    summary: "Lower-limb exoskeleton for gait assistance.",
-    details: "Developed embedded firmware for real-time motion control, evaluating the system in lab-based studies.",
-  },
-  {
-    title: "The NeuroExo project",
-    skills: ["exoskeleton", "neural", "embedded"],
-    summary: "Exoskeleton controlled by neural signals.",
-    details: "Decodes EMG/EEG data to drive exoskeleton movements, bridging neuroscience & robotics.",
-  },
-  {
-    title: "The Mindspring project",
-    skills: ["ai", "neuroscience"],
-    summary: "Exploring AI-based cognitive models for neuroscience applications.",
-    details: "Built prototypes simulating neural pathways for mental health and cognition studies.",
-  },
-  {
-    title: "The Sof-Exo Project",
-    skills: ["softrobotics", "exoskeleton"],
-    summary: "A soft exosuit for upper-limb assistance.",
-    details: "Uses pneumatic actuators in fabric-based design, offering lightweight assistive motion.",
-  },
-  {
-    title: "C++ Text-based game",
-    skills: ["c++", "oop", "gamedev"],
-    summary: "A console-based adventure game using classes and inheritance.",
-    details: "Features an inventory system, NPC dialogue, combat, and branching storyline in pure C++.",
-  },
-  {
-    title: "Analog synthesizer",
-    skills: ["electronics", "analogcircuits", "music"],
-    summary: "DIY analog audio synthesizer with oscillators & filters.",
-    details: "Soldered custom boards for VCO, VCF, LFO modules, enabling unique soundscapes.",
-  },
-  {
-    title: "3D printed Guitar Pedal",
-    skills: ["3dprinting", "electronics", "music"],
-    summary: "Custom pedal enclosure & circuit for guitar effects.",
-    details: "Designed a distortion and reverb unit with a 3D printed chassis and Arduino-based switching.",
-  },
-  {
-    title: "Decoding Voyager's golden message using C",
-    skills: ["c", "signals", "space"],
-    summary: "A C-based approach to decode the Golden Record data.",
-    details: "Parses raw signals and interprets images/sounds from NASA’s iconic interstellar record.",
-  },
-];
+import AnalogSynth from "./ProjectCards/AnalogSynth.astro";
+import AutonomousRCCar from "./ProjectCards/AutonomousRCCar.astro";
+import GuitarPedal from "./ProjectCards/GuitarPedal.astro";
+import MindspringProject from "./ProjectCards/MindspringProject.astro";
+import NeuroExoProject from "./ProjectCards/NeuroExoProject.astro";
+import PLEGSProject from "./ProjectCards/PLEGSProject.astro";
+import PurdueREU from "./ProjectCards/PurdueREU.astro";
+import RiceREU from "./ProjectCards/RiceREU.astro";
+import SoftExoProject from "./ProjectCards/SoftExoProject.astro";
+import SolioMatlabApp from "./ProjectCards/SolioMatlabApp.astro";
+import TextGame from "./ProjectCards/TextGame.astro";
+import VoyagerDecoder from "./ProjectCards/VoyagerDecoder.astro";
 ---
 
 <!-- The “Projects” card that expands to reveal the filter bar + sub-projects -->
@@ -91,33 +21,42 @@ const projects = [
   title="Projects"
   colSpan="md:col-span-3"
   rowSpan="md:row-span-2"
+  body="Explore my projects in robotics, embedded systems, and more. Click to expand and see the full list!"
   expandable={true}
 >
-  <!-- No default-slot content, so no text when collapsed -->
-
-  <astro:slot slot="expanded">
-    <!-- Filter bar -->
-    <div class="skills-filter mb-4 space-x-2">
+  <div slot="expanded">
+    <!-- Filter Bar -->
+    <div class="skills-filter mb-4 space-x-2 top-[10px]">
       <button class="filter-btn active" data-skill="All">All</button>
       <button class="filter-btn" data-skill="Robotics">Robotics</button>
       <button class="filter-btn" data-skill="Embedded">Embedded</button>
       <button class="filter-btn" data-skill="Exoskeleton">Exoskeleton</button>
       <button class="filter-btn" data-skill="C++">C++</button>
       <button class="filter-btn" data-skill="C">C</button>
-      <button class="filter-btn" data-skill="3D Printing">3DPrinting</button>
+      <button class="filter-btn" data-skill="3D Printing">3D Printing</button>
       <button class="filter-btn" data-skill="WebDev">WebDev</button>
-      <button class="filter-btn" data-skill="MATLAB">Matlab</button>
+      <button class="filter-btn" data-skill="MATLAB">MATLAB</button>
       <button class="filter-btn" data-skill="Research">Research</button>
       <button class="filter-btn" data-skill="Electronics">Electronics</button>
     </div>
-    <ProyectLayout title="Projects" description="A collection of my recent projects.">
-      <main class="relative text-white m-auto p-4 grid gap-4 max-w-6xl sm:grid-cols-2 lg:grid-cols-4">
+    <!-- Projects Layout -->
+    <ProyectLayout title="Projects" description="">
+      <main class="relative text-white m-auto p-5 grid gap-4 max-w-6xl sm:grid-cols-8 lg:grid-cols-4">
         <AnalogSynth />
-        <AnalogSynth />
-        <AnalogSynth />
+        <AutonomousRCCar />
+        <GuitarPedal />
+        <MindspringProject />
+        <NeuroExoProject />
+        <PLEGSProject />
+        <PurdueREU />
+        <RiceREU />
+        <SoftExoProject />
+        <SolioMatlabApp />
+        <TextGame />
+        <VoyagerDecoder />      
       </main>
     </ProyectLayout>
-  </astro:slot>
+  </div>
 </Card>
 
 <!-- Filter logic & styling -->
@@ -132,9 +71,11 @@ const projects = [
     cursor: pointer;
     transition: all 0.2s ease;
   }
+
   .filter-btn:hover {
     opacity: 1;
   }
+
   .filter-btn.active {
     background: #fff;
     color: #000;
@@ -153,6 +94,7 @@ const projects = [
     cursor: pointer;
     z-index: 10;
   }
+
   .close-btn:hover {
     opacity: 0.7;
   }

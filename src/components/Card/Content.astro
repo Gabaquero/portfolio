@@ -1,5 +1,6 @@
 ---
 import Button from "../Button.astro";
+
 interface Props {
   title?: string;
   body?: string;
@@ -9,25 +10,49 @@ interface Props {
 const { title, body, expandedBody } = Astro.props;
 ---
 
-<>
+<div class="content-wrapper">
   <div class="header flex justify-between items-center relative">
     {title && <h2 class="text-xl font-bold m-0">{title}</h2>}
-    <div class="hidden-when-collapsed absolute top-[-10px] right-0">
-        <Button
-            className="close-btn"
-            style="background-color: var(--card-bg); border: none; font-size: 1.25rem; padding: 0.25rem;"
-        >
-            &times;
-        </Button>
+    <div class="hidden-when-collapsed absolute top-[-15px] right-0">
+      <button
+        class="close-btn"
+        style="background: none; border: none; font-size: 1.5rem; padding: 0.25rem; color: currentColor;"
+      >
+        &times;
+      </button>
     </div>
   </div>
 
-  {body && <p class="m-0 font-light text-base">{body}</p>}
+  <div class="visible-when-collapsed">
+    {body && <p class="m-0 font-light text-base">{body}</p>}
+  </div>
 
-  <slot />
-
-  <div class="hidden-when-collapsed mt-4 p-2 border-t border-gray-500 relative">
+  <div class="hidden-when-collapsed">
     {expandedBody && <p class="mb-2">{expandedBody}</p>}
     <slot name="expanded" />
   </div>
-</>
+
+  <slot />
+</div>
+
+<style>
+  /* Base styles */
+  .content-wrapper {
+    height: 100%;
+  }
+
+  /* Initially hide expanded content */
+  .hidden-when-collapsed {
+    display: none;
+  }
+
+  /* Show expanded content only when this specific card is expanded */
+  :global(.card.expanded) > .content-wrapper .hidden-when-collapsed {
+    display: block;
+  }
+
+  /* Hide collapsed content when this specific card is expanded */
+  :global(.card.expanded) > .content-wrapper .visible-when-collapsed {
+    display: none;
+  }
+</style>

@@ -1,17 +1,13 @@
 ---
-import Card from "../Card/index.astro";
+import NestedCard from "../Card/NestedCard.astro";
 ---
 
-<Card
-  title="AnalogSynth"
-  colSpan="md:col-span-1"
-  rowSpan="md:row-span-2"
-  expandable={true}
->
-  <!-- Collapsed view -->
-  <!-- No default-slot content, so no text when collapsed -->
-
-  <astro:slot slot="expanded">
-
-  </astro:slot>
-</Card>
+<NestedCard title="A Miniaturized SensorTag-FPGA Board" expandable={true}>
+  <!-- Content that is always visible -->
+  <div slot="expanded">
+    <p>
+      DIY analog audio synthesizer with oscillators & filters. 
+      Soldered custom boards for VCO, VCF, and LFO modules, enabling unique soundscapes.
+    </p>
+  </div>
+</NestedCard>

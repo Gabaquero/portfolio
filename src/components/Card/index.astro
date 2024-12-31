@@ -25,7 +25,7 @@ const {
   colorText,
   height,
   expandable = false,
-  style, /* retrieve style prop */
+  style,
 } = Astro.props;
 ---
 
@@ -38,6 +38,7 @@ const {
           ${rowSpan || ""}
           ${expandable ? "expandable hover:border-primary-500 cursor-pointer" : ""}
         `}
+  data-expandable={expandable}
 >
   {href && (
     <p class="mb-2 text-sm">
@@ -52,3 +53,105 @@ const {
     <slot name="expanded" slot="expanded" />
   </Content>
 </div>
+
+<script>
+  function setupCards() {
+    const cards = document.querySelectorAll('.card[data-expandable="true"]');
+    
+    cards.forEach(card => {
+      card.addEventListener('click', (event) => {
+        const target = event.target as HTMLElement;
+        if (!target) return;
+        
+        if (target.closest('a') || target.closest('.close-btn')) return;
+        
+        // Only expand if clicking this specific card (not a nested one)
+        if (target.closest('.card') !== card) return;
+        
+        const isExpanded = card.classList.contains('expanded');
+        
+        // Close all other expanded cards
+        document.querySelectorAll('.card.expanded').forEach(expandedCard => {
+          if (expandedCard !== card) {
+            expandedCard.classList.remove('expanded');
+          }
+        });
+        
+        card.classList.toggle('expanded');
+      });
+
+      // Handle close button clicks
+      const closeBtn = card.querySelector('.close-btn');
+      if (closeBtn) {
+        closeBtn.addEventListener('click', (event) => {
+          event.stopPropagation();
+          card.classList.remove('expanded');
+        });
+      }
+    });
+
+    // Close expanded card when clicking outside
+    document.addEventListener('click', (event) => {
+      const target = event.target as HTMLElement;
+      if (!target) return;
+      
+      if (!target.closest('.card.expanded')) {
+        document.querySelectorAll('.card.expanded').forEach(card => {
+          card.classList.remove('expanded');
+        });
+      }
+    });
+  }
+
+  // Setup on initial load
+  setupCards();
+
+  // Setup on client-side navigation
+  document.addEventListener('astro:page-load', setupCards);
+</script>
+
+<style>
+  .card {
+    --card-bg: rgba(30, 41, 59, 1);
+  }
+
+  .card.expandable {
+    transform-origin: center;
+    will-change: transform;
+  }
+
+  .card.expanded {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform: none;
+    margin: 0;
+    z-index: 50;
+    overflow-y: auto;
+  }
+
+  .card.expanded::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.75);
+    z-index: -1;
+  }
+
+  /* Content layout when expanded */
+  .card.expanded > :global(.content-wrapper) {
+    height: 100%;
+    padding: 1rem;
+  }
+
+  /* Ensure nested cards maintain their collapsed state */
+  .card.expanded :global(.card:not(.expanded)) > :global(.content-wrapper) .hidden-when-collapsed {
+    display: none !important;
+  }
+
+  .card.expanded :global(.card:not(.expanded)) > :global(.content-wrapper) .visible-when-collapsed {
+    display: block !important;
+  }
+</style>
