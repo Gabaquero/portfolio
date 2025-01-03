@@ -2,17 +2,32 @@
 interface Props {
   title: string;
   expandable?: boolean;
+  colSpan?: string;
+  rowSpan?: string;
+  height?: string;
+  width?: string;
 }
 
-const { title, expandable = true } = Astro.props;
+const { 
+  title, 
+  expandable = true, 
+  colSpan = "col-span-1",
+  rowSpan = "",
+  height = "h-full",
+  width = "w-full"
+} = Astro.props;
 ---
 
-<div class="nested-card bg-darkslate-500 shadow-lg rounded-lg p-6 border border-darkslate-100">
+<div 
+  class={`nested-card relative transition-all duration-300
+          bg-darkslate-500 shadow-lg rounded-lg p-6 border border-darkslate-100
+          flex-none ${height} ${width} ${colSpan} ${rowSpan}
+          hover:border-primary-500 cursor-pointer`}
+>
   <div class="header flex justify-between items-center relative">
     <h2 class="text-xl font-bold m-0">{title}</h2>
   </div>
 
-  <!-- Close button moved outside header and styled to match main card -->
   {expandable && (
     <div class="close-button-wrapper opacity-0 pointer-events-none absolute top-2 right-2 z-50">
       <button
@@ -31,8 +46,9 @@ const { title, expandable = true } = Astro.props;
 
 <style>
   .nested-card {
-    position: relative;
-    transition: all 0.3s ease;
+    --card-bg: rgba(30, 41, 59, 1);
+    transform-origin: center;
+    will-change: transform;
   }
 
   .nested-card .expanded-content {
@@ -48,6 +64,7 @@ const { title, expandable = true } = Astro.props;
     height: 90%;
     z-index: 100;
     overflow-y: auto;
+    animation: cardOpen 0.3s ease forwards;
   }
 
   .nested-card.expanded::before {
@@ -61,6 +78,7 @@ const { title, expandable = true } = Astro.props;
   .nested-card.expanded .expanded-content {
     display: block;
     margin-top: 1rem;
+    animation: contentFade 0.3s ease forwards;
   }
 
   /* Close button visibility */
@@ -83,6 +101,28 @@ const { title, expandable = true } = Astro.props;
 
   .close-btn:hover {
     background-color: rgba(255, 255, 255, 0.1);
+  }
+
+  @keyframes cardOpen {
+    from {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+  }
+
+  @keyframes contentFade {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 </style>
 
