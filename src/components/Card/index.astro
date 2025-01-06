@@ -48,7 +48,12 @@ const {
     </p>
   )}
 
-  <Content title={title} body={body} expandedBody={expandedBody}>
+  <Content
+    title={title}
+    expandedBody={expandedBody}
+    isExpandable={expandable}
+  >
+    {body && <div set:html={body}></div>}
     <slot />
     <slot name="expanded" slot="expanded" />
   </Content>

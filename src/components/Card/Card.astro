@@ -1,0 +1,33 @@
+---
+interface Props {
+  title: string;
+  colSpan?: string;
+  rowSpan?: string;
+  height?: string;
+  width?: string;
+}
+
+const { 
+  title,
+  colSpan = "col-span-1",
+  rowSpan = "row-span-1",
+  height = "h-full",
+  width = "w-full"
+} = Astro.props;
+---
+
+<div 
+  class={`nested-card relative transition-all duration-300
+          bg-darkslate-500 shadow-lg rounded-lg p-6 border border-darkslate-100
+          flex-none ${height} ${width} ${colSpan} ${rowSpan}
+          hover:border-primary-500 cursor-pointer`}
+>
+  <div class="header flex justify-between items-center relative">
+    <h2 class="text-xl font-bold m-0">{title}</h2>
+  </div>
+
+  <div class="expanded-content">
+    <slot name="expanded" />
+  </div>
+</div>
+

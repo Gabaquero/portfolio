@@ -5,54 +5,56 @@ interface Props {
   title?: string;
   body?: string;
   expandedBody?: string;
+  isExpandable?: boolean;  // Changed from expandable to isExpandable
 }
 
-const { title, body, expandedBody } = Astro.props;
+const { title, body, expandedBody, isExpandable = false } = Astro.props;
 ---
 
 <div class="content-wrapper">
+  {/* Header always visible */}
   <div class="header flex justify-between items-center relative">
     {title && <h2 class="text-xl font-bold m-0">{title}</h2>}
-    <div class="hidden-when-collapsed absolute top-[-15px] right-0">
-      <button
-        class="close-btn"
-        style="background: none; border: none; font-size: 1.5rem; padding: 0.25rem; color: currentColor;"
-      >
-        &times;
-      </button>
-    </div>
+    {isExpandable && (
+      <div class="expanded-only absolute top-[-15px] right-0">
+        <button
+          class="close-btn"
+          style="background: none; border: none; font-size: 1.5rem; padding: 0.25rem; color: currentColor;"
+        >
+          &times;
+        </button>
+      </div>
+    )}
   </div>
 
-  <div class="visible-when-collapsed">
-    {body && <p class="m-0 font-light text-base">{body}</p>}
+  {/* Content for collapsed state */}
+  <div class="collapsed-only">
+    <slot />
   </div>
 
-  <div class="hidden-when-collapsed">
+  {/* Content for expanded state */}
+  <div class="expanded-only">
     {expandedBody && <p class="mb-2">{expandedBody}</p>}
     <slot name="expanded" />
   </div>
-
-  <slot />
 </div>
 
 <style>
-  /* Base styles */
   .content-wrapper {
     height: 100%;
   }
 
-  /* Initially hide expanded content */
-  .hidden-when-collapsed {
+  /* By default, show collapsed content and hide expanded content */
+  .expanded-only {
     display: none;
   }
 
-  /* Show expanded content only when this specific card is expanded */
-  :global(.card.expanded) > .content-wrapper .hidden-when-collapsed {
+  /* When card is expanded, show expanded content and hide collapsed content */
+  :global(.card.expanded) .expanded-only {
     display: block;
   }
 
-  /* Hide collapsed content when this specific card is expanded */
-  :global(.card.expanded) > .content-wrapper .visible-when-collapsed {
+  :global(.card.expanded) .collapsed-only {
     display: none;
   }
 </style>
