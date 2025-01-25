@@ -2,10 +2,7 @@
 import Card from "./Card/index.astro";
 import ProyectLayout from "../layouts/ProyectLayout.astro";
 import Summary from "../components/ResumeCards/Summary.astro";
-import Education from "../components/ResumeCards/Education.astro";
-import TechnicalSkills from "../components/ResumeCards/TechnicalSkills.astro";
 import Experience from "../components/ResumeCards/Experience.astro";
-import Leadership from "../components/ResumeCards/Leadership.astro";
 import RelatedProjects from "../components/ResumeCards/RelatedProjects.astro";
 
 const CardCollapsed = `
@@ -37,19 +34,16 @@ const CardCollapsed = `
 ---
 <Card 
   title="About me"
-  colSpan="md:col-span-1" 
+  colSpan="md:col-span-1"
   rowSpan="md:row-span-6"
   body={CardCollapsed}
   expandable={true}
 >
   <div slot="expanded">
     <ProyectLayout title="My Resume" description="">
-      <main class="relative text-white m-auto p-5 grid gap-4 max-w-6xl sm:grid-cols-8 lg:grid-cols-4">
+      <main class="relative text-white m-auto p-5 grid gap-5 max-w-6xl sm:grid-cols-8 lg:grid-cols-3">
         <Summary />
-        <Education />
-        <TechnicalSkills />
         <Experience />
-        <Leadership />
         <RelatedProjects />
       </main>
     </ProyectLayout>
