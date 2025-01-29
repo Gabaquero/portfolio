@@ -3,11 +3,33 @@ import NestedCard from "../Card/NestedCard.astro";
 ---
 
 <NestedCard title="Autonomous RC Car" expandable={true}>
-  <!-- Content that is always visible -->
+  <!-- Content that is always visible (collapsed state) -->
+
   <div slot="expanded">
     <p>
-      DIY analog audio synthesizer with oscillators & filters. 
-      Soldered custom boards for VCO, VCF, and LFO modules, enabling unique soundscapes.
+      This autonomous RC car project was created during my freshman year at
+      Lone Star College–Montgomery while I was an active member of the
+      Engineering Society. The car is powered by a Raspberry Pi equipped with
+      a camera running DonkeyCar. After approximately one hour of training,
+      it can autonomously follow a track.
+      <br /><br />
+      The chassis was 3D printed and assembled at the Engineering Society,
+      showcasing how rapid prototyping and machine learning can be combined
+      to create a self-driving RC car.
     </p>
+
+    <!-- Image section -->
+    <div class="flex flex-wrap gap-4 mt-4">
+      <img
+        src="/ProjectImg/AutonomousRC/RCCarA.jpg"
+        alt="Autonomous RC Car - View A"
+        class="max-w-xs rounded-lg"
+      />
+      <img
+        src="/ProjectImg/AutonomousRC/RCCarB.jpg"
+        alt="Autonomous RC Car - View B"
+        class="max-w-xs rounded-lg"
+      />
+    </div>
   </div>
 </NestedCard>
